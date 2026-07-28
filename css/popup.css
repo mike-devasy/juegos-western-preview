@@ -1,0 +1,564 @@
+:root {
+  --registration-orange: #fc6200;
+  --registration-card: linear-gradient(135deg, #223 0%, #112 100%);
+  --registration-field: linear-gradient(90deg, rgba(255, 255, 255, 0.096), rgba(255, 255, 255, 0.04));
+  --registration-danger: #ef4444;
+}
+
+body.registration-popup-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+.registration-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  visibility: hidden;
+  opacity: 0;
+  overflow: auto;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.registration-popup.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.registration-popup__panel {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 24px 15px;
+  background: url("../assets/img/registration/popup-bg.webp") center 90% / cover no-repeat;
+}
+
+.popup__form {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  transform: scale(0.96);
+  transition: transform 0.3s ease;
+}
+
+.registration-popup.is-open .popup__form {
+  transform: scale(1);
+}
+
+.form__content {
+  width: min(100%, 556px);
+  padding: 35px 65px;
+  border-radius: 32px;
+  color: #fff;
+  background: var(--registration-card);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.form__shell-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+  padding-bottom: 32px;
+  margin-bottom: 45px;
+  border-bottom: 1px solid rgba(140, 140, 181, 0.62);
+}
+
+.form__shell-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form__shell-brand-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.form__shell-brand-text {
+  color: #fff;
+  font-family: var(--secondaryFont, Arial, sans-serif);
+  font-size: 40px;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.form__shell-action {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.form__shell-support {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--registration-orange);
+  -webkit-mask: url("../assets/img/registration/headphones.svg") center / contain no-repeat;
+  mask: url("../assets/img/registration/headphones.svg") center / contain no-repeat;
+}
+
+.form__content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form__title {
+  color: #fff;
+  font-family: var(--secondaryFont, Arial, sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.form__content-login,
+.register-form__signin a,
+.check__text a {
+  color: var(--registration-orange);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form__content-login {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.bonus-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 2px solid var(--registration-orange);
+  border-radius: 12px;
+  color: #fff;
+  background: var(--registration-field);
+  cursor: default;
+}
+
+.bonus-card__icon {
+  width: 40px;
+  height: 60px;
+  flex: 0 0 40px;
+  object-fit: contain;
+}
+
+.bonus-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+}
+
+.bonus-card__top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bonus-card__badge {
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #fff;
+  background: var(--registration-orange);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.bonus-card__label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+.bonus-card__text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.bonus-card__text strong {
+  color: var(--registration-orange);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 70px;
+  padding: 20px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  background: var(--registration-field);
+  transition: border-color 0.2s ease, margin-bottom 0.2s ease;
+}
+
+.field:hover,
+.field:focus-within {
+  border-color: rgba(255, 89, 0, 0.8);
+}
+
+.field.is-invalid {
+  margin-bottom: 14px;
+  border-color: var(--registration-danger);
+}
+
+.field input {
+  min-width: 0;
+  flex: 1;
+  color: #fff;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.field input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.field:not(.field--phone) input:not(:placeholder-shown) {
+  transform: translateY(8px);
+}
+
+.field__icon,
+.field__phone-flag {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.field__phone-prefix {
+  display: flex;
+  margin-right: 6px;
+}
+
+.field__hidden-placeholder {
+  position: absolute;
+  top: 13px;
+  left: 48px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.field:not(.field--phone) input:not(:placeholder-shown) ~ .field__hidden-placeholder {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.field__toggle {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+}
+
+.field__eye {
+  width: 20px;
+  height: 20px;
+}
+
+.field__error {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--registration-danger);
+  font-size: 12px;
+  line-height: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.field.is-invalid > .field__error,
+.check.is-invalid .field__error {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.field__error-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.check.is-invalid {
+  margin-bottom: 14px;
+}
+
+.check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.check__box {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border: 1px solid #b2b2b2;
+  border-radius: 8px;
+}
+
+.check input:checked + .check__box {
+  border-color: var(--registration-orange);
+  background: var(--registration-orange);
+}
+
+.check__icon {
+  width: 13px;
+  height: 10px;
+  opacity: 0;
+}
+
+.check input:checked + .check__box .check__icon {
+  opacity: 1;
+}
+
+.check__text {
+  position: relative;
+  color: #c0c0c0;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.check__text strong {
+  color: var(--registration-orange);
+}
+
+.check__text .field__error {
+  top: calc(100% + 7px);
+}
+
+.register-form__error {
+  color: var(--registration-danger);
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.register-form__error[hidden] {
+  display: none;
+}
+
+.register-form__submit {
+  min-height: 72px;
+  padding: 20px 27px;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--registration-orange);
+  font-family: var(--secondaryFont, Arial, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.register-form__submit:hover,
+.register-form__submit:focus-visible {
+  background: #e04e00;
+}
+
+.register-form__submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.register-form__signin {
+  margin-top: 8px;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.register-form__note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.register-form__note strong,
+.bottom-line strong {
+  color: var(--registration-orange, var(--orangeColor));
+  font-weight: 500;
+}
+
+@media (max-width: 1550px) {
+  .registration-popup__panel {
+    min-height: 720px;
+    background-position-y: 50%;
+  }
+
+  .popup__form {
+    transform: translateY(4%) scale(0.8);
+    transform-origin: top center;
+  }
+
+  .registration-popup.is-open .popup__form {
+    transform: translateY(4%) scale(0.8);
+  }
+}
+
+@media (max-width: 1100px) {
+  .bonus-card {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 8px;
+  }
+
+  .bonus-card__text br {
+    display: none;
+  }
+
+  .check {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .registration-popup__panel {
+    min-height: 100dvh;
+    padding: 0;
+    background-position: center;
+  }
+
+  .popup__form,
+  .registration-popup.is-open .popup__form {
+    min-height: 100dvh;
+    transform: none;
+  }
+
+  .form__content {
+    min-height: 100dvh;
+    padding: 24px 20px;
+    border-radius: 0;
+  }
+
+  .form__shell-top {
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+
+  .form__shell-brand-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .form__shell-brand-text {
+    font-size: 30px;
+  }
+
+  .form__content-header {
+    margin-bottom: 14px;
+  }
+
+  .form__title {
+    font-size: 14px;
+  }
+
+  .form__content-login {
+    font-size: 12px;
+  }
+
+  .bonus-card {
+    padding: 6px 10px;
+    margin-bottom: 14px;
+  }
+
+  .bonus-card__text {
+    font-size: 16px;
+  }
+
+  .register-form {
+    gap: 14px;
+  }
+
+  .field {
+    min-height: 54px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .field__hidden-placeholder {
+    top: 9px;
+  }
+
+  .check {
+    margin-top: 0;
+    gap: 6px;
+  }
+
+  .check__text {
+    font-size: 12px;
+  }
+
+  .register-form__submit {
+    min-height: 60px;
+    padding-block: 20px;
+    font-size: 16px;
+  }
+
+  .register-form__note {
+    font-size: 11px;
+  }
+}
+
+@media (hover: hover) {
+  .form__shell-action--next:hover .form__shell-support {
+    background: #e04e00;
+  }
+}

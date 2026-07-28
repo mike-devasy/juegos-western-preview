@@ -1,0 +1,14 @@
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="flag-argentina-clip">
+      <rect x="2" y="4" width="24" height="20" rx="4" />
+    </clipPath>
+  </defs>
+  <rect x="2" y="4" width="24" height="20" rx="4" fill="#75AADB" />
+  <g clip-path="url(#flag-argentina-clip)">
+    <rect x="2" y="10.67" width="24" height="6.66" fill="#F4F4F4" />
+    <circle cx="14" cy="14" r="2.25" fill="#F6B83F" />
+    <circle cx="14" cy="14" r="3.25" stroke="#D79A1D" stroke-width="0.75" stroke-dasharray="0.25 1.3" />
+  </g>
+  <rect x="2.5" y="4.5" width="23" height="19" rx="3.5" stroke="rgba(255,255,255,0.12)" />
+</svg>
