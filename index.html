@@ -10,7 +10,7 @@
 		<title>Juegos</title>
 		<script type="module" src="./js/dev/standalone-mtfef.js?v=trk-461"></script>
 		<script type="module" src="./js/dev/index.js?v=trk-461"></script>
-		<link rel="stylesheet" crossorigin="" href="./css/dev/index.css?v=juegos-rebuild-5">
+		<link rel="stylesheet" crossorigin="" href="./css/dev/index.css?v=hero-cards-pulse-3">
 		<link rel="stylesheet" href="./css/popup.css?v=trk-461">
 	</head>
 	<body>
@@ -64,7 +64,16 @@
 								<picture class="hero__stripe hero__stripe--mobile">
 									<img src="./assets/img/hero/orange-line-mobile.webp" alt="">
 								</picture>
-								<img src="./assets/img/hero/hero-western.webp" alt="" class="hero__character">
+								<div class="hero__art">
+									<picture class="hero__art-base">
+										<source media="(min-width: 1101px)" srcset="./assets/img/hero/hero-western-desktop-base.webp">
+										<img src="./assets/img/hero/hero-western-mobile-base.webp" alt="">
+									</picture>
+									<picture class="hero__art-cards" aria-hidden="true">
+										<source media="(min-width: 1101px)" srcset="./assets/img/hero/hero-western-desktop-cards.webp">
+										<img src="./assets/img/hero/hero-western-mobile-cards.webp" alt="">
+									</picture>
+								</div>
 							</div>
 							<div class="hero__content">
 								<div class="hero__title-block title-block">
