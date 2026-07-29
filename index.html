@@ -8,10 +8,10 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&amp;family=Zalando+Sans+Expanded:ital,wght@0,700;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 		<title>Juegos</title>
-		<script type="module" src="./js/dev/standalone-mtfef.js?v=trk-461"></script>
-		<script type="module" src="./js/dev/index.js?v=trk-461"></script>
+		<script type="module" src="./js/dev/standalone-mtfef.js?v=bonus-selector-1"></script>
+		<script type="module" src="./js/dev/index.js?v=bonus-selector-1"></script>
 		<link rel="stylesheet" crossorigin="" href="./css/dev/index.css?v=cards-pulse-slower">
-		<link rel="stylesheet" href="./css/popup.css?v=trk-461">
+		<link rel="stylesheet" href="./css/popup.css?v=bonus-chevron-white">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -166,15 +166,50 @@
 							<h2 class="form__title" id="registration-popup-title">OBTENER BONIFICACIÓN</h2>
 							<a href="https://cuatrobet.com/login" class="form__content-login">INICIAR SESIÓN</a>
 						</div>
-						<button class="bonus-card" type="button" aria-label="Welcome bonus">
-							<img src="./assets/img/registration/bono_3@1x.webp" srcset="./assets/img/registration/bono_3@1x.webp 1x, ./assets/img/registration/bono_3@2x.webp 2x" alt="" class="bonus-card__icon">
-							<div class="bonus-card__body">
-								<p class="bonus-card__top"><span class="bonus-card__badge">Bono</span><span class="bonus-card__label">de Bienvenida para Slots de Casino</span></p>
-								<p class="bonus-card__text">Bono de Slots del <strong>400%</strong> + <strong>200 GG</strong></p>
+						<div class="bonus-select" data-bonus-select>
+							<button class="bonus-card bonus-select__toggle" type="button" aria-label="Elegir bono" aria-haspopup="listbox" aria-expanded="false" aria-controls="registration-bonus-options">
+								<span class="bonus-card__selection">
+									<img src="./assets/img/registration/bono_3@1x.webp" srcset="./assets/img/registration/bono_3@1x.webp 1x, ./assets/img/registration/bono_3@2x.webp 2x" alt="" class="bonus-card__icon">
+									<span class="bonus-card__body">
+										<span class="bonus-card__top"><span class="bonus-card__badge">Bono</span><span class="bonus-card__label">de Bienvenida para Slots de Casino</span></span>
+										<span class="bonus-card__text">Bono de Slots del <strong>400%</strong> + <strong>200 GG</strong></span>
+									</span>
+								</span>
+								<span class="bonus-card__chevron" aria-hidden="true"></span>
+							</button>
+							<div class="bonus-select__options" id="registration-bonus-options" role="listbox" aria-label="Bonos disponibles" hidden>
+								<button class="bonus-option is-selected" type="button" role="option" aria-selected="true" data-bonus-id="welcome-slots" data-bonus-code="1">
+									<img src="./assets/img/registration/bono_3@1x.webp" srcset="./assets/img/registration/bono_3@1x.webp 1x, ./assets/img/registration/bono_3@2x.webp 2x" alt="" class="bonus-card__icon">
+									<span class="bonus-card__body">
+										<span class="bonus-card__top"><span class="bonus-card__badge">Bono</span><span class="bonus-card__label">de Bienvenida para Slots de Casino</span></span>
+										<span class="bonus-card__text">Bono de Slots del <strong>400%</strong> + <strong>200 GG</strong></span>
+									</span>
+								</button>
+								<button class="bonus-option" type="button" role="option" aria-selected="false" data-bonus-id="casino" data-bonus-code="1">
+									<img src="./assets/img/registration/bonus-slots.webp" alt="" class="bonus-card__icon">
+									<span class="bonus-card__body">
+										<span class="bonus-card__top"><span class="bonus-card__label">Slots</span></span>
+										<span class="bonus-card__text">Slots: <strong>150%</strong> Dep Bonus + <strong>54 GG</strong></span>
+									</span>
+								</button>
+								<button class="bonus-option" type="button" role="option" aria-selected="false" data-bonus-id="sports" data-bonus-code="2">
+									<img src="./assets/img/registration/bonus-sport.webp" alt="" class="bonus-card__icon">
+									<span class="bonus-card__body">
+										<span class="bonus-card__top"><span class="bonus-card__label">Sport</span></span>
+										<span class="bonus-card__text">Sport: <strong>150%</strong> Dep Bonus</span>
+									</span>
+								</button>
+								<button class="bonus-option" type="button" role="option" aria-selected="false" data-bonus-id="live" data-bonus-code="3">
+									<img src="./assets/img/registration/bonus-live.webp" alt="" class="bonus-card__icon">
+									<span class="bonus-card__body">
+										<span class="bonus-card__top"><span class="bonus-card__label">Live</span></span>
+										<span class="bonus-card__text">Live: <strong>20%</strong> Cashback + <strong>10 Fichas gratis</strong></span>
+									</span>
+								</button>
 							</div>
-						</button>
+						</div>
 						<form class="register-form" id="register-form" novalidate>
-							<input type="hidden" name="selectedBonus" value="">
+							<input type="hidden" name="selectedBonus" id="selected-bonus-id" value="welcome-slots">
 							<input type="hidden" name="nnBonus" id="selected-bonus-code" value="1">
 							<input type="hidden" name="selectedLanguage" value="es">
 							<input type="hidden" name="defaultCurrency" value="ARS">

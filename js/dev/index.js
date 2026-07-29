@@ -151,6 +151,64 @@ function initRegistrationPopup() {
 
   if (!popup || !form) return;
 
+  const bonusSelect = popup.querySelector("[data-bonus-select]");
+  const bonusToggle = bonusSelect?.querySelector(".bonus-select__toggle");
+  const bonusSelection = bonusToggle?.querySelector(".bonus-card__selection");
+  const bonusOptionsPanel = bonusSelect?.querySelector(".bonus-select__options");
+  const bonusOptions = bonusOptionsPanel ? Array.from(bonusOptionsPanel.querySelectorAll(".bonus-option")) : [];
+  const selectedBonusInput = form.elements.selectedBonus;
+  const bonusCodeInput = form.elements.nnBonus;
+
+  const setBonusSelectOpen = (isOpen) => {
+    if (!bonusSelect || !bonusToggle || !bonusOptionsPanel) return;
+    bonusSelect.classList.toggle("is-open", isOpen);
+    bonusToggle.setAttribute("aria-expanded", String(isOpen));
+    bonusOptionsPanel.hidden = !isOpen;
+  };
+
+  if (bonusSelect && bonusToggle && bonusSelection && bonusOptionsPanel && bonusOptions.length) {
+    bonusToggle.addEventListener("click", () => {
+      setBonusSelectOpen(bonusToggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    bonusOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        const bonusId = option.dataset.bonusId || "welcome-slots";
+        const bonusCode = option.dataset.bonusCode || "1";
+        const optionIcon = option.querySelector(".bonus-card__icon");
+        const optionBody = option.querySelector(".bonus-card__body");
+
+        if (!optionIcon || !optionBody) return;
+
+        bonusSelection.replaceChildren(optionIcon.cloneNode(true), optionBody.cloneNode(true));
+        bonusOptions.forEach((candidate) => {
+          const isSelected = candidate === option;
+          candidate.classList.toggle("is-selected", isSelected);
+          candidate.setAttribute("aria-selected", String(isSelected));
+        });
+
+        selectedBonusInput.value = bonusId;
+        bonusCodeInput.value = bonusCode;
+        window.nnbonus = bonusCode;
+        bonusCodeInput.dispatchEvent(new Event("change", { bubbles: true }));
+        bonusToggle.setAttribute("aria-label", `Bono seleccionado: ${optionBody.textContent.trim()}`);
+        setBonusSelectOpen(false);
+        bonusToggle.focus();
+      });
+    });
+
+    bonusSelect.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setBonusSelectOpen(false);
+        bonusToggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!bonusSelect.contains(event.target)) setBonusSelectOpen(false);
+    });
+  }
+
   initPhoneMask(form.elements.phone);
 
   openers.forEach((opener) => {

@@ -1,6 +1,7 @@
 const REGISTRATION_ERROR_MESSAGE = 'Algo salió mal.';
 const AR_COUNTRY_CODE = '54';
 const DEFAULT_NN_BONUS = '1';
+const ALLOWED_NN_BONUSES = new Set(['1', '2', '3']);
 const API_BASE_URL = 'https://apg.cuatrobet.com/v0/identity';
 const FINGERPRINT_SCRIPT_URL = 'https://openfpcdn.io/fingerprintjs/v4';
 const MARKETING_LIBRARY_URL = 'https://cuatrobet.com/mtapi/js/v2/mlibrary.js';
@@ -268,6 +269,12 @@ const insertUrlParam = (key, value, href) => {
   }
 };
 
+const getSelectedBonusCode = (value) => {
+  const inputValue = value ?? document.getElementById('selected-bonus-code')?.value;
+  const bonusCode = String(inputValue || DEFAULT_NN_BONUS);
+  return ALLOWED_NN_BONUSES.has(bonusCode) ? bonusCode : DEFAULT_NN_BONUS;
+};
+
 const syncTrackingLinks = () => {
   const anchors = document.querySelectorAll('a[href]');
 
@@ -287,7 +294,7 @@ const syncTrackingLinks = () => {
       }
     });
 
-    nextHref = insertUrlParam('regBonus', DEFAULT_NN_BONUS, nextHref);
+    nextHref = insertUrlParam('regBonus', getSelectedBonusCode(), nextHref);
     if (typeof window.clstrmid === 'string' && window.clstrmid.trim()) {
       nextHref = insertUrlParam('clstrmid', window.clstrmid.trim(), nextHref);
     }
@@ -339,7 +346,7 @@ const preparePayload = (rawData = {}) => {
   data.defaultCurrency = data.defaultCurrency || landingConfig.defaultCurrency;
   data.selectedLanguage = data.selectedLanguage || landingConfig.selectedLanguage;
   data.phone = normalizePhone(data.phone);
-  data.nnBonus = DEFAULT_NN_BONUS;
+  data.nnBonus = getSelectedBonusCode(data.nnBonus);
   data.isPlayerAgree = true;
   data.formName = 'SHORTREGISTRATIONBYPHONE';
   data.marketingMeta = collectMarketingMeta();
@@ -355,7 +362,8 @@ const preparePayload = (rawData = {}) => {
 };
 
 const submitThroughSharedFlow = (payload) => {
-  window.nnbonus = DEFAULT_NN_BONUS;
+  const bonusCode = getSelectedBonusCode(payload.nnBonus);
+  window.nnbonus = bonusCode;
   window.landing_type = 'registration_on_landing';
 
   return new Promise((resolve, reject) => {
@@ -368,7 +376,7 @@ const submitThroughSharedFlow = (payload) => {
           redirectTo = 'https://cuatrobet.com';
         }
 
-        resolve({ redirectUrl: buildRedirectUrl(redirectTo, DEFAULT_NN_BONUS) });
+        resolve({ redirectUrl: buildRedirectUrl(redirectTo, bonusCode) });
       },
       (response) => {
         reject(new Error(response?.message || REGISTRATION_ERROR_MESSAGE));
@@ -418,16 +426,17 @@ const submitRegistrationDirect = async (payload) => {
     }
   }
 
-  return { redirectUrl: buildRedirectUrl(redirectDomain, DEFAULT_NN_BONUS) };
+  return { redirectUrl: buildRedirectUrl(redirectDomain, getSelectedBonusCode(payload.nnBonus)) };
 };
 
 const initStandaloneAdapter = () => {
   const bonusInput = document.getElementById('selected-bonus-code');
+  const initialBonusCode = getSelectedBonusCode(bonusInput?.value);
   if (bonusInput) {
-    bonusInput.value = DEFAULT_NN_BONUS;
+    bonusInput.value = initialBonusCode;
   }
 
-  window.nnbonus = DEFAULT_NN_BONUS;
+  window.nnbonus = initialBonusCode;
   window.landing_type = 'registration_on_landing';
 
   window.patrickLandingAdapter = {
