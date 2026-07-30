@@ -174,7 +174,7 @@ function initRegistrationPopup() {
     bonusOptions.forEach((option) => {
       option.addEventListener("click", () => {
         const bonusId = option.dataset.bonusId || "welcome-slots";
-        const bonusCode = option.dataset.bonusCode || "1";
+        const bonusCode = option.dataset.bonusCode || "88";
         const optionIcon = option.querySelector(".bonus-card__icon");
         const optionBody = option.querySelector(".bonus-card__body");
 

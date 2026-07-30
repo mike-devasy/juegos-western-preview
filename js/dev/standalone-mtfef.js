@@ -1,7 +1,7 @@
 const REGISTRATION_ERROR_MESSAGE = 'Algo salió mal.';
 const AR_COUNTRY_CODE = '54';
-const DEFAULT_NN_BONUS = '1';
-const ALLOWED_NN_BONUSES = new Set(['1', '2', '3']);
+const DEFAULT_NN_BONUS = '88';
+const ALLOWED_NN_BONUSES = new Set(['88', '2', '90']);
 const API_BASE_URL = 'https://apg.cuatrobet.com/v0/identity';
 const FINGERPRINT_SCRIPT_URL = 'https://openfpcdn.io/fingerprintjs/v4';
 const MARKETING_LIBRARY_URL = 'https://cuatrobet.com/mtapi/js/v2/mlibrary.js';
