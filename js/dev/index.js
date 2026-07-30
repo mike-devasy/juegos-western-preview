@@ -1,4 +1,3 @@
-import "../common.min.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -259,24 +258,40 @@ function initRegistrationPopup() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const errorBlock = form.querySelector("#register-form-error");
+    errorBlock.textContent = "";
+    errorBlock.hidden = true;
     if (!validate(true)) return;
 
-    form.elements.phone.value = normalizePhone(form.elements.phone.value);
+    const selectedOption = bonusOptions.find((option) => option.classList.contains("is-selected"));
+    const selectedBonusCode = selectedOption?.dataset.bonusCode || "";
+    if (!selectedBonusCode || bonusCodeInput.value !== selectedBonusCode) {
+      errorBlock.textContent = "Selecciona un bono valido.";
+      errorBlock.hidden = false;
+      return;
+    }
 
+    const phoneInput = form.elements.phone;
     const submitButton = form.querySelector(".registration-form__submit");
     submitButton.disabled = true;
-    errorBlock.hidden = true;
 
     try {
       const data = Object.fromEntries(new FormData(form).entries());
-      const result = await window.patrickLandingAdapter?.submit(data, { form });
-      if (!result?.redirectUrl) throw new Error("Missing registration redirect");
+      data.phone = normalizePhone(data.phone);
+      const adapter = window.juegosLandingAdapter;
+      if (!adapter || typeof adapter.submit !== "function") {
+        throw new Error("El registro no está disponible temporalmente. Inténtalo de nuevo.");
+      }
+      const result = await adapter.submit(data);
+      if (!result?.redirectUrl) throw new Error("No se pudo completar el registro. Inténtalo de nuevo.");
       window.location.assign(result.redirectUrl);
     } catch (error) {
       console.error("Registration submit failed", error);
-      errorBlock.textContent = "Algo salió mal. Intentá nuevamente.";
+      errorBlock.textContent = error instanceof Error && error.message
+        ? error.message
+        : "No se pudo completar el registro. Inténtalo de nuevo.";
       errorBlock.hidden = false;
     } finally {
+      phoneInput.value = formatArPhone(phoneInput.value);
       submitButton.disabled = false;
     }
   });
