@@ -1045,7 +1045,9 @@ body {
 }
 @media (max-width: 68.75em) {
   .advantages-hero {
-    width: min(100%, 460px);
+    width: fit-content;
+    max-width: min(100%, 460px);
+    align-self: center;
     flex-direction: column;
   }
 }
